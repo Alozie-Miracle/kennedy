@@ -1,17 +1,30 @@
+import { HelmetProvider } from "react-helmet-async";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 
-import { HelmetProvider } from 'react-helmet-async';
-import './App.css'
-import LandingPage from './LandingPage';
-
+import LandingPage from "./pages/LandingPage";
+import { Layout } from "./pages/Layout";
+import { LazyLoadedExample } from "./pages/LazyLoadedPage";
 
 function App() {
   const helmetContext = {};
-
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="lazyLoad" element={<LazyLoadedExample />} />
+      </Route>
+    )
+  );
   return (
     <HelmetProvider context={helmetContext}>
-      <LandingPage />
+      <RouterProvider router={router}></RouterProvider>
     </HelmetProvider>
-  )
+  );
 }
 
-export default App
+export default App;
